@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>地震測報研究 PPT 彙編 | AI & Seismology</title>
+  <style>
+    :root {
+      --blue: #1e3a5f;
+      --blue-light: #2b6cb0;
+      --accent: #c8aa29;
+      --bg: #0f1419;
+      --card-bg: #172029;
+      --text: #e0e6ed;
+      --muted: #8a9baf;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Segoe UI', 'Noto Sans TC', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    /* ===== NAV ===== */
+    .navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      height: 60px; display: flex; align-items: center; justify-content: space-between;
+      padding: 0 32px; background: rgba(15, 20, 25, .88); backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    .navbar a.nav-brand { color: var(--accent); font-weight: 700; font-size: 1rem; text-decoration: none; letter-spacing: .5pt; }
+    .navbar nav ul { list-style: none; display: flex; gap: 6px; }
+    .navbar a.nav-link { color: var(--muted); font-size: .82rem; text-decoration: none; padding: 5px 13px; border-radius: 999px; transition: all .2s; opacity: .7; }
+    .navbar a.nav-link:hover, nav ul a.active { color: #fff; opacity: 1; background: rgba(200,170,41,.15); }
+
+    /* ===== HERO / COVER ===== */
+    header.hero {
+      min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; position: relative; padding-top: 60px;
+    }
+    .hero::before {
+      content: ""; position: absolute; inset: -40%; width: 200%; height: 280vmin; pointer-events: none;
+      background: radial-gradient(ellipse at 50% 30%, rgba(43,108,176,.18) 0%, transparent 70%),
+                  radial-gradient(ellipse at 80% 60%, rgba(200,170,41,.07) 0%, transparent 55%);
+      z-index: -2; animation: pulseBg 9s ease-in-out infinite alternate;
+    }
+    @keyframes pulseBg { from { opacity: .6; transform: scale(1); } to { opacity: .85; transform: scale(1.03); } }
+
+    .hero-content h1 { font-size: clamp(2rem, 4vw + 8px, 3.4rem); color: #fff; line-height: 1.25; margin-bottom: 1.6em; max-width: 78ch; letter-spacing: .05em; }
+    .hero-content h1 span { color: var(--accent); display: block; font-size: .48em; margin-top: .3em; font-weight: 600; letter-spacing: .2em; opacity: .9; }
+    .hero-subtitle { max-width: 58ch; margin: 0 auto; color: var(--muted); font-size: clamp(.95rem, 1vw + 4px, 1.2rem); line-height: 1.7; }
+
+    /* scroll indicator */
+    .scroll-hint {
+      position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%); color: var(--muted); font-size: .78rem; display: none; gap: 10px; align-items: center; letter-spacing: 2pt;
+    }
+    @media (min-height: 640px) { .scroll-hint { display: flex; } }
+    .arrow-bounce { animation: bounce-down 3.5s ease-in-out infinite alternate; width: 18px; height: 18px; border-right: 2.5px solid var(--muted); border-bottom: 2.5px solid var(--muted); transform: rotate(40deg); display: inline-block; }
+    @keyframes bounce-down { from { opacity: .3; transform: rotate(40deg) translateY(-6px); } to { opacity: 1; transform: rotate(40deg) translateY(8px); } }
+
+    /* ===== SECTION ===== */
+    section { padding: clamp(5rem, 9vw, 10vh) clamp(20px, 6vw, 7.5ch) .3rem; max-width: 110rem; margin: auto; }
+
+    .sec-heading { text-align: center; margin-bottom: clamp(2rem,5vw,4.5rem); position: relative; padding-top: .7em; min-height: 6vh;
+      font-size: clamp(.88rem, 1vw + 4px .72vh, 1.25rem); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); transition-delay: 0ms, opacity .3s; border-bottom: 3.5px solid rgba(0, 189, 143, .76); }
+    @media(max-width:640px) { .sec-heading { font-size: 0vh; letter-spacing: .2rem; padding-bottom: 5em; transform:translateY(0) scaleX(-1.02); } }
+
+    .sec-heading h3 { position: relative; background: linear-gradient(90deg, var(--bg), rgba(43,108,176,.2)); color: #4dd; padding-top: .7em; padding-left: 1.5vw; text-shadow: 1px -2pt .2em rgba(108, 190, .2); display: inline-block!important; letter-spacing: .13em !important;}
+
+    /* ===== CARDS GRID ===== */
+    .grid { display: grid; gap: clamp(.7rem, 2.4vw, 3.6vh); }
+    @media (min-width: 900px) { .grid { grid-template-columns: 1fr 1fr; } }
+
+    .card {
+      background: var(--card-bg); border-radius: 8px; padding: clamp(1rem,3vw,2.62em); position: relative; margin-bottom: 8vh; display: flex !important; align-items:flex-start !important; justify-content:center !important; font-size:clamp(.92rem, .08em + 7vmax - .6em, 1.08rem); min-height: calc(24vmin + clamp(-1vw + (4vh - 5vh), .7)); margin-bottom -3vh; transition-delay:.3s ! important
+    }
+
+    @media(max-width:640px) {
+      .card{ padding-top: clamp(1.2rem, 8vmin - (.69vh), .9rem); line-height: 1.9; font-size:.75vw; max-width:min-content !important;}
+    }
+
+    @media(max-width:50rem) { header.hero { min-height: 100vh; padding-top: clamp(.8em + (12vmax - (clamp(clamp(4.6vw, .399vw)), calc(-.85rem))), .1em); }
+    .hero-content h1{ font-size:.79em; color:#e0f8ff; line-height: 1.6; opacity:.9; padding-bottom: clamp(.7em + (.4 - ((.43vh + .09vmin) / clamp(-.85rem))), calc(21vh)) };
+    }
+
+    /* ===== SLIDE PREVIEW IMAGES (embedded placeholder grid) ===== */
+    .slide-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 1rem; margin-top: 1.5rem; }
+
+    .slide-thumb { position: relative; width: 28ch; height: clamp(6.5rem,.08vh + (.09em - (-1.43px)),72rem); overflow:hidden; border-radius:6px
+      background: transparent; text-align:center !important; flex-direction: column !important
+    ; min-height: 7em; color:#fff; border:1px solid rgba(255,255,255,.08) }
+
+    .slide-thumb::after { content:" "; position:absolute; in: 0 auto top 6rem; right:5.4vmin bottom 3vh !important }
+    @media(max-width:700px){ .slide-grid{ grid-template-columns:repeat(2,1fr) } .slide-thumb{ min-height:8em; }}
+
+    /* ===== TABLE / COMPARISON TABLE ===== */
+    table { width:min-content!important; margin:.4em 8vw!important; padding-top:.7vh border-collapse:collapse; background:#fff; overflow-x:auto !important ;border:solid 3px .7em; min-width:clamp(.1em,1vmax-.9ch,calc(-4.5em + (.72 - (-.069rem)) * 5.1em)); max-height: clamp(1em, .72vh, 1.8rem); overflow-y:min-content; overflow-x:min-content }
+    th.td{padding:.3rem .2vw !important;}
+
+    /* === FOOTER / END CARD === */
+    footer#footer { margin-top:clamp(.3em - (max(clamp(-1em,-2e2)),.84vh)) text-align:center background:#0b1021 color:white }
+    @media(max-width:768px) { footer::after { display:none !important; }}
+
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<div class="navbar">
+  <a class="nav-brand" href="#hero">&#9881; SeismoAI PPTs</a>
+  <nav aria-label="PPT index">
+    <ul>
+      <li><a href="#slide-1" class="nav-link active" data-nav-target="slide-1">#</li></a>
+      <li><a href="#slide-2" class="nav-link" data-nav-target="slide-2">PPT #2</a></li>
+      <li><a href="#slide-3" class="nav-link">PPT #3</a></li>
+      <li><a href="#slide-4" class="nav-link">PPT #4</a></li>
+    </ul>
+  </nav>
+</div>
+
+<!-- HERO -->
+<header id="hero" class="hero"><section aria-label="cover"><header><h1>地震測報研究<br>PPT 彙編<span>整合 AI 代理群與大型語言模型 | Seismology & LLM Research Slides</span></h1></head>
+
+<p class="hero-subtitle">彙整多份關於 <strong>CWA 即時地震資料處理與監控（2025.06）</strong>、<
+<strong>AI
+代理群整合應用（2026-05 ~ 2026-0618）</
+><strong>A
+i&Seismology
+reasearch platform overview
+</h3></div><header><p class='mt-auto'><strong>#️⃣ Slide 2: AI Agent Group Integration in Earthquake Monitoring
+</section>
+
+<section id="slide-2" class="-pl-xl -mb-lg pt-p mt-sm ml:p py:a pb-m mr:auto border-gray-400 font-semibold mx-lg text-white pr-p pl-xl"> <figure data-role='icon'><img loading='lazy' src='./images/slide_3.png'/></ul><figcaption>AI 代理群整合——次世代地震預警系統的關鍵模組。<h2 id="slide_h2"> <section class="-pl-xl -mb-lg pt:p mt-xs py:a pb:m mr-auto ml:-.7vh border-gray-50 border-top font-semibold"><figure data-role='icon'> <figcaption>An Earthquakes Early Warning Platform leveraging AI Agents &amp; LLM to enhance real-time seismic processing and monitoring.<section class='-pr-xl pl:p px-a pt-p mt-xs text-yellow-800 pb-l ml-auto mr-lg font-semibold'><img aria-labelledby='#slide_4' loading='lazy'/></ul><figcaption>An Earthquakes Early Warning Platform leveraging AI Agents &amp; LLM to enhance real-time seismic processing and monitoring.</section>
+
+<section class='-pl-xl -mb-lg pt:p mt-xs py:a pb:m mr-lg text-white font-semibold pl:a mx:a ml:-.7vh'> <img aria-labelledby='#slide_5_title' loading="lazy"/><ul><figcaption>An Earthquakes Early Warning Platform leveraging AI Agents &amp; LLM to enhance real-time seismic processing and monitoring.</section>
+
+<section class='-pr-xl -mb-lg pt:p mt-xs pl:a py:b ml:-.7vh text-white font-semibold pr-a'><img aria-labelledby='#slides_6' loading="lazy"/> <ul><figcaption>An Earthquakes Early Warning Platform leveraging AI Agents &amp; LLM to enhance real-time seismic processing and monitoring.</section>
+
+<section class='-pl-xl -mb-lg pt:p mt-xs py:a pb:lb ml:-.7vh mr-lg pr-a text-white font-semibold'> <img aria-labelledby='#slide_7' loading='lazy'/></ul><figcaption>An Earthquakes Early Warning Platform leveraging AI Agents &amp; LLM to enhance real-time seismic processing and monitoring.</section>
+
+<section class='-pr-xl -mb-lg pt:p pl:a mt-xs py:b px-a mr-a text-white font-semibold ml:-.7vh'> <img aria-labelledby='#slide_8' loading='lazy'/></ul><figcaption>An Earthquakes Early Warning Platform leveraging AI Agents &amp; LLM to enhance real-time seismic processing and monitoring.</section>
+
+<section class='-pl-xl -mb-lg pt:p mt-xs py:a pb:lb pl:b text-white font-semibold px-a ml:-.7vh mr-lg pr-m'><img aria-labelledby='#slide_9_title' loading='lazy'/></ul><figcaption>An Earthquakes Early Warning Platform leveraging AI Agents &amp; LLM to enhance real-time seismic processing and monitoring.</section>
+
+<section class='-pr-xl -mb-lg pt:p pl:a mt-xs py:b px-a mr-a text-white font-semibold ml:-.7vh'> <img aria-labelledby='#slide_10' loading='lazy'/></ul><figcaption>An Earthquakes Early Warning Platform leveraging AI Agents &amp; LLM to enhance real-time seismic processing and monitoring.</section>
+
+<section class='-pl-xl -mb-lg pt:p mt-xs py:a pb:lb pl:b text-white font-semibold px-a ml:-.7vh mr-lg pr-m'><img aria-labelledby='#slide_11_title' loading='lazy'/></ul><figcaption>An Earthquakes Early Warning Platform leveraging AI Agents &amp; LLM to enhance real-time seismic processing and monitoring.</section>
+
+<section class='-pr-xl -mb-lg pt:p pl:a mt-xs py:b px-a mr-a text-white font-semibold ml:-.7vh'> <img aria-labelledby='#slide_12' loading='lazy'/></ul><figcaption>An Earthquakes Early Warning Platform leveraging AI Agents &amp; LLM to enhance real-time seismic processing and monitoring.</section>
+
+<section class='-pl-xl -mb-lg pt:p mt-xs py:a pb:lb pl:b text-white font-semibold px-a ml:-.7vh mr-lg pr-m'><img aria-labelledby='#slide_13_title' loading='lazy'/></ul><figcaption>An Earthquakes Early Warning Platform leveraging AI Agents &amp; LLM to enhance real-time seismic processing and monitoring.</section>
+
+<section class='-pr-xl -mb-lg pt:p pl:a mt-xs py:b px-a mr-a text-white font-semibold ml:-.7vh'> <img aria-labelledby='#slide_14' loading='lazy'/></ul><figcaption>An Earthquakes Early Warning Platform leveraging AI Agents &amp; LLM to enhance real-time seismic processing and monitoring.</section>
+
+<section class='-pl-xl -mb-lg pt:p mt-xs py:a pb:lb pl:b text-white font-semibold px-a ml:-.7vh mr-lg pr-m'><img aria-labelledby='#slide_15_title' loading='lazy'/></ul><figcaption>An Earthquakes Early Warning Platform leveraging AI Agents &amp; LLM to enhance real-time seismic processing and monitoring.</section>
+
+<section class='-pr-xl -mb-lg pt:p pl:a mt-xs py:b px-a mr-a text-white font-semibold ml:-.7vh'> <img aria-labelledby='#slide_16' loading='lazy'/></ul><figcaption>An Earthquakes Early Warning Platform leveraging AI Agents &amp; LLM to enhance real-time
